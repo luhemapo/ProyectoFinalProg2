@@ -29,13 +29,39 @@
 </body>
 
 <img class="centerIMG" src="Logo c4p.png" width="284" height="199">
+<br>
+<h3 style="text-align: center;">Welcome!</h3>
+<table class="table center" style="max-width: 85%">
+    <div>
+        <thead>
+            <tr>
+                <th scope="col">Your ID</th>
+                <th scope="col">Username</th>
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th scope="col">Neighborhood</th>
+                <th scope="col">Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>1</th>
+                <td>Owner1</td>
+                <td>Pepe Perez</td>
+                <td>Cll 120 # 50-10</td>
+                <td>Suba</td>
+                <td><button type="button" class="button" data-toggle="modal" data-target="#editUserModal">Edit</button>
+                </td>
+            </tr>
+        </tbody>
+    </div>
+</table>
 
-<h3 style="text-align: center;">Welcome #user#</h3>
+
+
 <h3 style="text-align: center;">List of pets</h3>
 <!---------------------------------------------------------------TABLE------------------------------------------------------------------------>
 <table class="table center" style="max-width: 85%">
-
-
     <div>
         <thead>
             <tr>
@@ -48,9 +74,7 @@
                 <th scope="col">Sex</th>
                 <th scope="col">Dangerous?</th>
                 <th scope="col">Sterilized?</th>
-                <th scope="col">Neighborhood</th>
                 <th scope="col">Picture</th>
-                <th scope="col">Edit pet</th>
                 <th scope="col">Vet visits</th>
                 <th scope="col">Case</th>
             </tr>
@@ -66,11 +90,10 @@
                 <td>Male</td>
                 <td>No</td>
                 <td>No</td>
-                <td>Suba</td>
                 <td><button type="button" class="button" data-toggle="modal"
                         data-target="#galleryModal">Gallery</button></td>
-                <td><button type="button" class="button" data-toggle="modal" data-target="#petEditModal">Edit</td>
-                <td><button type="button" class="button" data-toggle="modal" data-target="#vetVisitModal">See</button></td>
+                <td><button type="button" class="button" data-toggle="modal" data-target="#vetVisitModal">See</button>
+                </td>
                 <td><button type="button" class="button" data-toggle="modal" data-target="#caseModal">Add/See</button>
                 </td>
             </tr>
@@ -84,11 +107,10 @@
                 <td>Male</td>
                 <td>No</td>
                 <td>No</td>
-                <td>Suba</td>
                 <td><button type="button" class="button" data-toggle="modal"
                         data-target="#galleryModal">Gallery</button></td>
-                <td><button type="button" class="button" data-toggle="modal" data-target="#petEditModal">Edit</td>
-                <td><button type="button" class="button" data-toggle="modal" data-target="#vetVisitModal">See</button></td>
+                <td><button type="button" class="button" data-toggle="modal" data-target="#vetVisitModal">See</button>
+                </td>
                 <td><button type="button" class="button" data-toggle="modal" data-target="#caseModal">Add/See</button>
                 </td>
             </tr>
@@ -102,11 +124,10 @@
                 <td>Male</td>
                 <td>No</td>
                 <td>No</td>
-                <td>Suba</td>
                 <td><button type="button" class="button" data-toggle="modal"
                         data-target="#galleryModal">Gallery</button></td>
-                <td><button type="button" class="button" data-toggle="modal" data-target="#petEditModal">Edit</td>
-                <td><button type="button" class="button" data-toggle="modal" data-target="#vetVisitModal">See</button></td>
+                <td><button type="button" class="button" data-toggle="modal" data-target="#vetVisitModal">See</button>
+                </td>
                 <td><button type="button" class="button" data-toggle="modal" data-target="#caseModal">Add/See</button>
                 </td>
             </tr>
@@ -182,32 +203,6 @@
                                 <option value="no">No</option>
                             </select>
                         </p>
-                        <p>
-                            <label>Neighborhood:</label> <br>
-                            <select id="neighborhood" class="form-control" required>
-                                <option selected value=""> Elige una opción </option>
-                                <option value="Antonio Nariño">Antonio Nariño</option>
-                                <option value="Barrios Unidos">Barrios Unidos</option>
-                                <option value="Bosa">Bosa</option>
-                                <option value="Chapinero">Chapinero</option>
-                                <option value="Ciudad Bolívar">Ciudad Bolívar</option>
-                                <option value="Engativá">Engativá</option>
-                                <option value="Fontibón">Fontibón</option>
-                                <option value="Kennedy">Kennedy</option>
-                                <option value="La Candelaria">La Candelaria</option>
-                                <option value="Los Mártires">Los Mártires</option>
-                                <option value="Puente Aranda">Puente Aranda</option>
-                                <option value="Rafael Uribe Uribe">Rafael Uribe Uribe</option>
-                                <option value="San Cristóbal">San Cristóbal</option>
-                                <option value="Santa Fe">Santa Fe</option>
-                                <option value="Suba">Suba</option>
-                                <option value="Sumapaz">Sumapaz</option>
-                                <option value="Teusaquillo">Teusaquillo</option>
-                                <option value="Tunjuelito">Tunjuelito</option>
-                                <option value="Usaquén">Usaquén</option>
-                                <option value="Usme">Usme</option>
-                            </select>
-                        </p>
                     </div>
                 </form>
             </div>
@@ -220,18 +215,48 @@
     </div>
 </div>
 
-<!---------------------------------------------------------------Gallery MODAL---------------------------------------------------------------->
-<div class="modal fade" id="galleryModal" tabindex="-1" role="dialog" aria-labelledby="galleryModal" aria-hidden="true">
+<!---------------------------------------------------------------Edit User MODAL---------------------------------------------------------------->
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="galleryModal">Gallery</h5>
+                <h5 class="modal-title" id="editUserModal">Edit user</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                ...
+                <p>
+                    <label>Neighborhood:</label> <br>
+                    <select id="neighborhood" class="form-control" required>
+                        <option selected value=""> Elige una opción </option>
+                        <option value="Antonio Nariño">Antonio Nariño</option>
+                        <option value="Barrios Unidos">Barrios Unidos</option>
+                        <option value="Bosa">Bosa</option>
+                        <option value="Chapinero">Chapinero</option>
+                        <option value="Ciudad Bolívar">Ciudad Bolívar</option>
+                        <option value="Engativá">Engativá</option>
+                        <option value="Fontibón">Fontibón</option>
+                        <option value="Kennedy">Kennedy</option>
+                        <option value="La Candelaria">La Candelaria</option>
+                        <option value="Los Mártires">Los Mártires</option>
+                        <option value="Puente Aranda">Puente Aranda</option>
+                        <option value="Rafael Uribe Uribe">Rafael Uribe Uribe</option>
+                        <option value="San Cristóbal">San Cristóbal</option>
+                        <option value="Santa Fe">Santa Fe</option>
+                        <option value="Suba">Suba</option>
+                        <option value="Sumapaz">Sumapaz</option>
+                        <option value="Teusaquillo">Teusaquillo</option>
+                        <option value="Tunjuelito">Tunjuelito</option>
+                        <option value="Usaquén">Usaquén</option>
+                        <option value="Usme">Usme</option>
+                    </select>
+                </p>
+                <p>
+                    <label>Address:</label> <br>
+                    <input id="address" class="form-control" type="text">
+                </p>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -240,12 +265,12 @@
     </div>
 </div>
 
-<!---------------------------------------------------------------Pet Edit MODAL---------------------------------------------------------------->
-<div class="modal fade" id="petEditModal" tabindex="-1" role="dialog" aria-labelledby="petEditModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
+<!---------------------------------------------------------------Gallery MODAL---------------------------------------------------------------->
+<div class="modal fade" id="galleryModal" tabindex="-1" role="dialog" aria-labelledby="galleryModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="petEditModal">Edit Pet</h5>
+                <h5 class="modal-title" id="galleryModal">Gallery</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
