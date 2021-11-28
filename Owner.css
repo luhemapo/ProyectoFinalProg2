@@ -1,8 +1,16 @@
+body {
+  background-color: #3965c362;
+}
 .center {
     margin-left: auto;
     margin-right: auto;
   }
-
+  .centerIMG {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    
+  }
   .button{
     border: none;
     border-radius: 1.5rem;
