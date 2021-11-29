@@ -10,6 +10,16 @@ body {
   padding-bottom: 40px;
   background-color: #3965c362;
 }
+.button{
+  border: none;
+  border-radius: 1.5rem;
+  padding: 2%;
+  background: #0062cc;
+  color: #fff;
+  font-weight: 600;
+  width: 100%;
+  cursor: pointer;
+}
 
 .form-signin {
   width: 100%;

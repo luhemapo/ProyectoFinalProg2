@@ -5,7 +5,7 @@
 .register{
 margin-top: 3%;
 padding: 3%;
-padding-right: 0%;
+padding-right: 1%;
 }
 .register-left{
 text-align: center;
@@ -19,21 +19,21 @@ width: 60%;
 background: #f8f9fa;
 font-weight: bold;
 color: #383d41;
-margin-top: -20%;
-margin-bottom: 45%;
+
+
 cursor: pointer;
 }
 .register-right{
 background: #f8f9fa;
-border-top-left-radius: 10% 50%;
-border-bottom-left-radius: 10% 50%;
+border-top-left-radius: 20% 50%;
+border-bottom-left-radius: 20% 50%;
 }
 .register-left img{
-margin-bottom: 5%;
 width: 80%;
 -webkit-animation: mover 2s infinite  alternate;
 animation: mover 1s infinite  alternate;
 }
+
 @-webkit-keyframes mover {
 0% { transform: translateY(0); }
 100% { transform: translateY(-20px); }
@@ -42,6 +42,7 @@ animation: mover 1s infinite  alternate;
 0% { transform: translateY(0); }
 100% { transform: translateY(-20px); }
 }
+
 .register-left p{
 font-weight: lighter;
 padding: 12%;
