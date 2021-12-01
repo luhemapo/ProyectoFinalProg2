@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'proyectofinalprog2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'PetsDB',
+        'NAME': 'FourPaws',
         'USER': 'postgres',
         'PASSWORD': '1234',
         'HOST': 'localhost',
