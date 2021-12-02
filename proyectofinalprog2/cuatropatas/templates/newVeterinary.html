@@ -45,33 +45,33 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <h3 class="register-heading">Register as Veterinary</h3>
+                            <form method="POST">
+                                {% csrf_token %}
                             <div class="row register-form">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Name *" value="" />
+                                        {{ form_vet.name }}
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Username *" value="" />
+                                        {{ form_user.username }}
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Password *" value="" />
+                                        {{ form_user.password }}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="email" class="form-control" placeholder="Your email *" value="" />
+                                        {{ form_user.email }}
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" minlength="10" maxlength="10" name="txtEmpPhone"
-                                            class="form-control" placeholder="Neighborhood *" value="" />
+                                        {{ form_vet.neighborhood }}
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" minlength="10" maxlength="10" name="txtEmpPhone"
-                                            class="form-control" placeholder="Address *" value="" />
+                                        {{ form_vet.address }}
                                     </div>
-
-
+                                    {{ form_user.role.as_hidden }}
                                     <input type="submit" class="btnRegister" value="Register" />
+                                </form>
                                 </div>
                             </div>
                         </div>
