@@ -1,8 +1,10 @@
 from django import forms
 from django.forms import widgets
+from django.forms.fields import CharField
 from .models import *
 
-class RegisterOwner(forms.ModelForm):
+class RegisterUser(forms.ModelForm):
+    role=CharField(initial='owner', required=False, widget=forms.HiddenInput(attrs={'default':'owner', 'value':'owner'}) )
     class Meta:
         model = Userapp
 
@@ -16,7 +18,39 @@ class RegisterOwner(forms.ModelForm):
         widgets = {
             'username': forms.TextInput(attrs={'placeholder':'Username *', 'required':True ,'class':'form-control'}),
             'email': forms.EmailInput(attrs={'placeholder':'Your email *', 'required':True ,'class':'form-control'}),
-            'password': forms.PasswordInput(attrs={'placeholder':'Password *', 'required':True ,'class':'form-control'}),
-            'role': forms.TextInput(attrs={'placeholder':'Name *', 'required':False ,'class':'form-control', 'value':'owner'}),
+            'password': forms.PasswordInput(attrs={'placeholder':'Password *', 'required':True ,'class':'form-control'}),   
         }
+
+class RegisterOwner(forms.ModelForm):
+    class Meta:
+        model = Owner
+
+        fields = [
+            'name',
+            'address',
+            'neighborhood',
+        ]
+
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder':'Name *', 'required':True ,'class':'form-control'}),
+            'address': forms.TextInput(attrs={'placeholder':'Your address *', 'required':True ,'class':'form-control'}),
+            'neighborhood': forms.TextInput(attrs={'placeholder':'Neighborhood *', 'required':True ,'class':'form-control'}),   
+        }
+
+class RegisterVet(forms.ModelForm):
+    class Meta:
+        model = Vet
+
+        fields = [
+            'name',
+            'address',
+            'neighborhood',
+        ]
+
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder':'Name *', 'required':True ,'class':'form-control'}),
+            'address': forms.TextInput(attrs={'placeholder':'Your address *', 'required':True ,'class':'form-control'}),
+            'neighborhood': forms.TextInput(attrs={'placeholder':'Neighborhood *', 'required':True ,'class':'form-control'}),   
+        }
+    
 

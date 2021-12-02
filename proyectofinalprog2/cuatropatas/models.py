@@ -3,27 +3,27 @@ from django.db import models
 # Create your models here.
 
 class Userapp(models.Model):
-    username = models.CharField(primary_key = True, max_length=30, unique=True)
+    username = models.CharField(primary_key = True, max_length=30, unique=True, null=False)
     email = models.EmailField(max_length=60, unique=True)
     password = models.CharField(max_length=30)
     role = models.CharField (max_length=15)
 
 class Official(models.Model):
     userapp = models.OneToOneField(Userapp, null=True, blank= True, on_delete=models.CASCADE)
-    username = models.CharField(primary_key = True, max_length=30, unique=True)
     name = models.CharField(max_length=30)
 
 class Owner(models.Model):
     userapp = models.OneToOneField(Userapp, null=True, blank= True, on_delete=models.CASCADE)
-    username = models.CharField(primary_key = True, max_length=30, unique=True)
     name = models.CharField(max_length=30)
+    address = models.CharField(max_length=60, blank=True)
+    neighborhood = models.CharField(max_length=30, blank=True)
+    
 
 class Vet(models.Model):
     userapp = models.OneToOneField(Userapp, null=True, blank= True, on_delete=models.CASCADE)
-    username = models.CharField(primary_key = True, max_length=30, unique=True)
     name = models.CharField(max_length=30)
-    address = models.CharField(max_length=60)
-    neighborhood = models.CharField(max_length=30)
+    address = models.CharField(max_length=60, null=False)
+    neighborhood = models.CharField(max_length=30, null=False)
 
 class Pet(models.Model):
     microchip = models.BigIntegerField(unique=True)

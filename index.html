@@ -5,25 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Log-in</title>
-  {% load static%}
+
   <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/sign-in/">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
     crossorigin="anonymous"></script>
+
   <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-  
-  <link href="../static/css/index.css" rel="stylesheet">
+  <link href="index.css" rel="stylesheet">
 </head>
+
 
 <body class="text-center">
   <main class="form-signin">
     <!---------------------------------- Formulario de ingreso! ---------------------------------->
 
-    <form method="post" action="">
+    <form>
 
-      <img class="mb-4" src="../static/images/Logo c4p.png" width="284" height="199">
+      <img class="mb-4" src="Logo c4p.png" width="284" height="199">
       <div class="form-floating">
         <input type="email" class="form-control" id="idUsuario">
         <label for="floatingInput">Correo</label>
@@ -34,7 +35,7 @@
       </div>
       <button class="button" id="idLogIn" type="submit">Log-in</button>
       <h3 class="mt-5 mb-3" style="font-size: larger;">Don´t have an account?</h3>
-      <button class="button" onclick="location.href='newUser'" id="idSign-in" type="button">Sign-in!</button>
+      <button class="button" onclick="location.href='newUser.html'" id="idSign-in" type="button">Sign-in!</button>
       <br><br><br>
       <p class="mt-5 mb-3 text-muted">By Luis Martinez</p>
     </form>
