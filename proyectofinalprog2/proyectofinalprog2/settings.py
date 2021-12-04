@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'cuatropatas',
+    'cuatropatas.apps.CuatropatasConfig',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +67,10 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTH_USER_MODEL = 'cuatropatas.Userapp'
+
+LOGIN_URL = 'index'
 
 WSGI_APPLICATION = 'proyectofinalprog2.wsgi.application'
 

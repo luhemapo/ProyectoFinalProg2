@@ -31,7 +31,8 @@
 <div>
     <table class="table center" style="max-width: 85%">
         <td>
-            <button class="button2" onclick="location.href='index.html'" id="Log out" type="button">Log Out</button>
+            <a href="{% url 'logout' %}">
+            <button class="button2" id="Log out" type="button">Log Out</button></a>
         </td>
     </table>
 </div>

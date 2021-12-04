@@ -1,11 +1,10 @@
+from typing import AbstractSet
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 # Create your models here.
 
-class Userapp(models.Model):
-    username = models.CharField(primary_key = True, max_length=30, unique=True, null=False)
-    email = models.EmailField(max_length=60, unique=True)
-    password = models.CharField(max_length=30)
+class Userapp(AbstractUser):
     role = models.CharField (max_length=15)
 
 class Official(models.Model):
@@ -33,6 +32,9 @@ class Pet(models.Model):
     size = models.CharField (max_length=30)
     sex = models.CharField (max_length=15)
     picture = models.CharField (max_length=120)
+    birth = models.DateField()
+    dangerous= models.CharField(max_length=5)
+    sterilized= models.CharField(max_length=5)
     owner = models.ForeignKey(Owner, null=False, on_delete=models.CASCADE)
 
 class PetCase(models.Model):

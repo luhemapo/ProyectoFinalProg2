@@ -31,7 +31,7 @@
 <div>
     <table class="table center" style="max-width: 85%">
             <td>
-                <button class="button2" onclick=" location.href='index.html'"   id="Log out" type="button">Log Out</button>
+                <button class="button2" onclick=" location.href='../'"   id="Log out" type="button">Log Out</button>
             </td>
     </table>
 </div>
@@ -55,12 +55,13 @@
             </tr>
         </thead>
         <tbody>
+            
             <tr>
-                <th>1</th>
-                <td>Owner1</td>
-                <td>Pepe Perez</td>
-                <td>Cll 120 # 50-10</td>
-                <td>Suba</td>
+                <th>{{user.id}}</th>
+                <td>{{user.username}}</td>
+                <td>{{user.owner.name}}</td>
+                <td>{{user.owner.address}}</td>
+                <td>{{user.owner.neighborhood}}</td>
                 <td><button type="button" class="button" data-toggle="modal" data-target="#editUserModal">Edit</button>
                 </td>
             </tr>
@@ -91,16 +92,18 @@
             </tr>
         </thead>
         <tbody>
+            {% if pets %}
+            {% for pet in pets %}
             <tr>
-                <th>1</th>
-                <td>Labrador</td>
-                <td>1998</td>
-                <td>Otto</td>
-                <td>Dog</td>
-                <td>Big</td>
-                <td>Male</td>
-                <td>No</td>
-                <td>No</td>
+                <th>{{pet.microchip}}</th>
+                <td>{{pet.race}}</td>
+                <td>{{pet.birth}}</td>
+                <td>{{pet.name}}</td>
+                <td>{{pet.species}}</td>
+                <td>{{pet.size}}</td>
+                <td>{{pet.sex}}</td>
+                <td>{{pet.dangerous}}</td>
+                <td>{{pet.sterilized}}</td>
                 <td><button type="button" class="button" data-toggle="modal"
                         data-target="#galleryModal">Gallery</button></td>
                 <td><button type="button" class="button" data-toggle="modal" data-target="#vetVisitModal">See</button>
@@ -108,40 +111,8 @@
                 <td><button type="button" class="button" data-toggle="modal" data-target="#caseModal">Add/See</button>
                 </td>
             </tr>
-            <tr>
-                <th>2</th>
-                <td>Labrador</td>
-                <td>1998</td>
-                <td>Otto</td>
-                <td>Dog</td>
-                <td>Big</td>
-                <td>Male</td>
-                <td>No</td>
-                <td>No</td>
-                <td><button type="button" class="button" data-toggle="modal"
-                        data-target="#galleryModal">Gallery</button></td>
-                <td><button type="button" class="button" data-toggle="modal" data-target="#vetVisitModal">See</button>
-                </td>
-                <td><button type="button" class="button" data-toggle="modal" data-target="#caseModal">Add/See</button>
-                </td>
-            </tr>
-            <tr>
-                <th>3</th>
-                <td>Labrador</td>
-                <td>1998</td>
-                <td>Otto</td>
-                <td>Dog</td>
-                <td>Big</td>
-                <td>Male</td>
-                <td>No</td>
-                <td>No</td>
-                <td><button type="button" class="button" data-toggle="modal"
-                        data-target="#galleryModal">Gallery</button></td>
-                <td><button type="button" class="button" data-toggle="modal" data-target="#vetVisitModal">See</button>
-                </td>
-                <td><button type="button" class="button" data-toggle="modal" data-target="#caseModal">Add/See</button>
-                </td>
-            </tr>
+            {% endfor %}
+            {% endif %}
         </tbody>
         <td><button type="button" class="button" data-toggle="modal" data-target="#addPetModal ">Add new Pet</button>
         </td>
@@ -158,70 +129,55 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form method="POST">
+                    {% csrf_token %}
                     <div class="form-group">
                         <p>
                             <label>Birth year:</label> <br>
-                            <input id="BirthYear" class="form-control" type="number" min="1990" max="2021"
-                                placeholder="1990..." pattern="[0-9]{4}">
+                            {{ form.birth }}
                         </p>
                         <p>
                             <label>Pet's name:</label> <br>
-                            <input id="petName" class="form-control" type="text">
+                            {{ form.name }}
                         </p>
                         <p>
                             <label>Microchip:</label> <br>
-                            <input id="microchip" class="form-control" type="text">
+                            {{ form.microchip }}
                         </p>
                         <p>
                             <label>Species:</label> <br>
-                            <select id="species" class="form-control" required>
-                                <option selected value=""> Choose </option>
-                                <option value="dog">Dog</option>
-                                <option value="cat">Cat</option>
-                            </select>
+                            {{ form.species }}
+                        </p>
+                        <p>
+                            <label>Race:</label> <br>
+                            {{ form.race }}
                         </p>
                         <p>
                             <label>Sex:</label> <br>
-                            <select id="sexo" class="form-control" required>
-                                <option selected value=""> Choose </option>
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
+                            {{ form.sex }}
                         </p>
                         <p>
                             <label>Size:</label> <br>
-                            <select id="size" class="form-control" required>
-                                <option selected value="">Choose </option>
-                                <option value="small">Small</option>
-                                <option value="medium">Medium</option>
-                                <option value="big">Big</option>
-                            </select>
+                            {{ form.size }}
                         </p>
                         <p>
                             <label>Is it potentially dangerous?:</label> <br>
-                            <select id="potentiallyDangerous" class="form-control" required>
-                                <option selected value=""> Choose</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-                            </select>
+                            {{ form.dangerous }}
                         </p>
                         <p>
                             <label>Is it sterilized?:</label> <br>
-                            <select id="esteril" class="form-control" required>
-                                <option selected value="">Choose</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-                            </select>
+                            {{ form.sterilized }}
                         </p>
                     </div>
-                </form>
+                    
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Add Pet</button>
+                {{ form.picture. }}
+                <button type="submit" class="btn btn-primary">Add Pet</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
             </div>
+        </form>
         </div>
     </div>
 </div>
