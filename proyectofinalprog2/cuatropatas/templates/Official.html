@@ -125,12 +125,14 @@
                 {% for pet in pets %}
             <tr>
                 <th>{{ pet.microchip }}</th>
+                <td>{{ pet.race }}</td>
+                <td>{{ pet.birth }}</td>
                 <td>{{ pet.name }}</td>
                 <td>{{ pet.species }}</td>
-                <td>{{ pet.race }}</td>
                 <td>{{ pet.size }}</td>
                 <td>{{ pet.sex }}</td>
-                <td>{{ pet.picture }}</td>
+                <td>{{ pet.dangerous }}</td>
+                <td>{{ pet.sterilized }}</td>
                 <td><button type="button" class="button" data-toggle="modal" data-target="#vetVisitModal">See</button>
                 </td>
                 <td><button type="button" class="button" data-toggle="modal" data-target="#caseModal">See</button>

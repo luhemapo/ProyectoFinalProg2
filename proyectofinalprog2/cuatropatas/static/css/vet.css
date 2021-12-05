@@ -45,6 +45,18 @@ body {
         cursor: pointer;
         width: 3cm;
       }
+
+      .button4{
+
+        font-size: larger;
+        border: none;
+        border-radius: 1.5rem;
+        background: #0062cc;
+        color: #fff;
+        font-weight: 600;
+        cursor: pointer;
+        width: 8cm;
+      }
       .search {
         background-image: url('../images/search.jpg');
         background-size: 45px;

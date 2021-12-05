@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.db.models.fields import TextField
 from django.forms import widgets
 from django.forms.fields import CharField
+from django.utils.regex_helper import Choice
 from .models import *
 from django.utils.translation import ugettext_lazy as _
 
@@ -107,3 +108,17 @@ class RegisterPet(forms.Form):
 class editOwner(forms.Form):
     address = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Your address *', 'required':True ,'class':'form-control'}))
     neighborhood = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Neighborhood *', 'required':True ,'class':'form-control'})) 
+
+class addPetCase(forms.Form):
+    PETS = []
+    pet = None
+    for pet in Pet.objects.all():
+        PETS.append((pet.id, str(pet.id) +"-"+ pet.name))
+    pets = forms.ChoiceField(required=True, choices = PETS, widget=forms.Select(attrs={'default': 1 , 'class':'form-select form-control' }))
+    microchip = forms.CharField(required=False, widget=forms.NumberInput({'class': 'form-control','id':'otherField'}))
+    description = forms.CharField(required=True, widget=forms.Textarea({'class': 'form-control'}))
+    TYPES= [('Choose','Choose'),('Microchip','Microchip implantation'),('Vaccination','Vaccination'),('Deworming','Deworming'),('Urgency','Urgency'),('Control','Control'),]
+    type= forms.ChoiceField( choices = TYPES, widget=forms.Select(attrs= { 'default' : 1,'required' : True,'class' : 'form-select form-control','id':'seeAnotherField'}))
+    
+class editVet(forms.Form):
+    address = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control'}))

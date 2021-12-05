@@ -4,9 +4,11 @@ from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as log
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView
+from datetime import date
 
-from cuatropatas.forms import RegisterOwner, RegisterUserO, RegisterVet, RegisterUserV, login, RegisterPet
-from cuatropatas.models import Vet, Owner, Pet, Userapp
+from cuatropatas.forms import RegisterOwner, RegisterUserO, RegisterVet, RegisterUserV, login, RegisterPet, addPetCase
+from cuatropatas.models import Vet, Owner, Pet, Userapp, PetCase
+from cuatropatas.forms import editVet
 # Create your views here.
 
 def index (request):
@@ -100,7 +102,29 @@ def newPet (request):
 
 @login_required
 def vet (request):
-    return render (request, "Vet.html")
+    petcases = PetCase.objects.all()
+    if request.method == 'POST':
+        form = addPetCase(request.POST)
+        form_edit = editVet(request.POST)
+        print("---------------------------------")
+        print(form.is_valid())
+        if form.is_valid():
+            created_at = date.today()
+            petid= form.cleaned_data['pets']
+            description= form.cleaned_data['description']
+            type= form.cleaned_data['type']
+            microchip= form.cleaned_data['microchip']
+            pet = Pet.objects.get(id=petid)
+            new_case = PetCase(created_at=created_at, type=type, description=description, pet=pet)
+            new_case.save()
+            if type == 'Microchip':
+                pet.microchip = microchip
+                pet.save()
+            return redirect('vet')
+    else:
+        form = addPetCase()
+        form_edit = editVet()
+    return render (request, "Vet.html",{'form':form, 'petcases':petcases})
 
 def logoutview (request):
     logout(request)

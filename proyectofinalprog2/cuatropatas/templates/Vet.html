@@ -56,10 +56,10 @@
         <tbody>
             <tr>
 
-                <td>4_Paws</td>
-                <td>4 Paws</td>
-                <td>Cll 120 # 50-10</td>
-                <td>Suba</td>
+                <td>{{user.username}}</td>
+                <td>{{user.vet.name}}</td>
+                <td>{{user.vet.address}}</td>
+                <td>{{user.vet.neighborhood}}</td>
                 <td><button type="button" class="button" data-toggle="modal" data-target="#editVetModal">Edit</button>
                 </td>
             </tr>
@@ -69,50 +69,12 @@
 
 <h3 style="text-align: center;">Add a pet´s visit</h3>
 <h3 style="text-align: center;">Select desired type of visit</h3>
+<br>
+<div style="text-align: center;">
+    <button type="button" class="button4" data-toggle="modal" data-target="#dewormingModal">Add</button>
+</div>
+<br>
 
-<table class="table center" style="max-width: 85%">
-    <div>
-
-        <thead>
-            <tr>
-                <th scope="col">Sterilization</th>
-                <th scope="col">Microchip</th>
-                <th scope="col">Vaccination</th>
-                <th scope="col">Deworming</th>
-                <th scope="col">Urgency</th>
-                <th scope="col">Control</th>
-
-
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <button type="button" class="button3" data-toggle="modal"
-                        data-target="#sterilizationModal">Add</button>
-                </td>
-                <td>
-                    <button type="button" class="button3" data-toggle="modal" data-target="#microchipModal">Add</button>
-                </td>
-                <td>
-                    <button type="button" class="button3" data-toggle="modal"
-                        data-target="#vaccinationModal">Add</button>
-                </td>
-                <td>
-                    <button type="button" class="button3" data-toggle="modal" data-target="#dewormingModal">Add</button>
-                </td>
-                <td>
-                    <button type="button" class="button3" data-toggle="modal" data-target="#urgencyModal">Add</button>
-                </td>
-                <td>
-                    <button type="button" class="button3" data-toggle="modal" data-target="#congtrolModal">Add</button>
-                </td>
-            </tr>
-        </tbody>
-
-
-    </div>
-</table>
 
 <!---------------------------------------------------------Registered visits Table------------------------------------------------------------>
 <br>
@@ -135,42 +97,19 @@
             </tr>
         </thead>
         <tbody>
+            {% if petcases %}
+            {% for pet in petcases %}
             <tr>
-                <td>1</td>
-                <td>2021/11/10 3:51</td>
-                <td>Sterilization1</td>
-                <td>All went good!</td>
-                <td>12</td>
-                <td>123</td>
-                <td>Pepe</td>
+                <td>{{ pet.id }}</td>
+                <td>{{ pet.created_at }}</td>
+                <td>{{ pet.type}}</td>
+                <td>{{ pet.description }}</td>
+                <td>{{ user.id }}</td>
+                <td>{{ pet.pet_id }}</td>
+                <td>{{ pet.pet.name }}</td>
             </tr>
-            <tr>
-                <td>2</td>
-                <td>2021/11/10 3:52</td>
-                <td>Sterilization2</td>
-                <td>All went good!</td>
-                <td>12</td>
-                <td>456</td>
-                <td>Michi</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>2021/11/10 3:53</td>
-                <td>Sterilization3</td>
-                <td>All went good!</td>
-                <td>12</td>
-                <td>789</td>
-                <td>Magu</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>2021/11/10 3:54</td>
-                <td>Sterilization4</td>
-                <td>All went good!</td>
-                <td>12</td>
-                <td>101</td>
-                <td>Gucci</td>
-            </tr>
+            {% endfor %}
+            {% endif %}
         </tbody>
     </div>
 </table>
@@ -211,6 +150,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <form method="POST" action="{% url 'vet' %}">
             <div class="modal-body">
                 <p>
                     <label>Neighborhood:</label> <br>
@@ -240,7 +180,7 @@
                 </p>
                 <p>
                     <label>Address:</label> <br>
-                    <input id="address" class="form-control" type="text">
+                    {{form_edit.address}}
                 </p>
 
             </div>
@@ -248,341 +188,64 @@
                 <button type="button" class="btn btn-primary">Save</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
+        </form>
         </div>
     </div>
 </div>
-
-
-<!--------------------------------------------------------------Sterilization MODAL-------------------------------------------------------------->
-<div class="modal fade" id="sterilizationModal" tabindex="-1" role="dialog" aria-labelledby="sterilizationModal"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="sterilizationModal">Add Sterilization</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <p>
-                        <label>Pet Id:</label> <br>
-                        <select id="case" class="form-control" required>
-                            <option selected value=""> Choose </option>
-                            <option value="lost">1</option>
-                            <option value="died">2</option>
-                            <option value="lost">3</option>
-                            <option value="died">4</option>
-                            <option value="lost">5</option>
-                            <option value="died">6</option>
-                        </select>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Description:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                    </p>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Add</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--------------------------------------------------------------Microchip MODAL-------------------------------------------------------------->
-<div class="modal fade" id="microchipModal" tabindex="-1" role="dialog" aria-labelledby="microchipModal"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="microchipModal">Add Microchip</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <p>
-                        <label>Pet Id:</label> <br>
-                        <select id="case" class="form-control" required>
-                            <option selected value=""> Choose </option>
-                            <option value="lost">1</option>
-                            <option value="died">2</option>
-                            <option value="lost">3</option>
-                            <option value="died">4</option>
-                            <option value="lost">5</option>
-                            <option value="died">6</option>
-                        </select>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Microchip number:</label>
-                        <input type="number" class="form-control" id="message-text">
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Description:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-
-                    </p>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Add</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--------------------------------------------------------------Vaccination MODAL-------------------------------------------------------------->
-<div class="modal fade" id="vaccinationModal" tabindex="-1" role="dialog" aria-labelledby="vaccinationModal"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="vaccinationModal">Add Vaccination</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <p>
-                        <label>Pet Id:</label> <br>
-                        <select id="case" class="form-control" required>
-                            <option selected value=""> Choose </option>
-                            <option value="lost">1</option>
-                            <option value="died">2</option>
-                            <option value="lost">3</option>
-                            <option value="died">4</option>
-                            <option value="lost">5</option>
-                            <option value="died">6</option>
-                        </select>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Description:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                    </p>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Add</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--------------------------------------------------------------Deworming MODAL-------------------------------------------------------------->
+<!--------------------------------------------------------------Add Visit MODAL-------------------------------------------------------------->
 <div class="modal fade" id="dewormingModal" tabindex="-1" role="dialog" aria-labelledby="dewormingModal"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="dewormingModal">Add Deworming</h5>
+                <h5 class="modal-title" id="dewormingModal">Regiter a visit</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form>
-                    <p>
+                <form class="p-3" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
                         <label>Pet Id:</label> <br>
-                        <select id="case" class="form-control" required>
-                            <option selected value=""> Choose </option>
-                            <option value="lost">1</option>
-                            <option value="died">2</option>
-                            <option value="lost">3</option>
-                            <option value="died">4</option>
-                            <option value="lost">5</option>
-                            <option value="died">6</option>
-                        </select>
+                        {{ form.pets }}
+                    </div>
+                    <div class="form-group">
+                        <label for="seeAnotherField">Visit type:</label>
+                        {{ form.type }}
+                    </div>
+                    <div class="form-group" id="otherFieldDiv">
+                        <label for="otherField">Type microchip number</label>
+                        {{ form.microchip }}
+                    </div>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">Description:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
+                        {{ form.description }}
                     </div>
-                    </p>
-
-                </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Add</button>
+                <button type="submit" class="btn btn-primary">Add</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
+            </form>
             </div>
         </div>
     </div>
 </div>
+<script>
 
-<!--------------------------------------------------------------Urgency MODAL-------------------------------------------------------------->
-<div class="modal fade" id="urgencyModal" tabindex="-1" role="dialog" aria-labelledby="urgencyModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="urgencyModal">Add Urgency</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <p>
-                        <label>Pet Id:</label> <br>
-                        <select id="case" class="form-control" required>
-                            <option selected value=""> Choose </option>
-                            <option value="lost">1</option>
-                            <option value="died">2</option>
-                            <option value="lost">3</option>
-                            <option value="died">4</option>
-                            <option value="lost">5</option>
-                            <option value="died">6</option>
-                        </select>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Description:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                    </p>
+    $("#seeAnotherField").change(function () {
+        if ($(this).val() == "Microchip") {
+            $('#otherFieldDiv').show();
+            $('#otherField').attr('required', '');
+            $('#otherField').attr('data-error', 'This field is required.');
+        } else {
+            $('#otherFieldDiv').hide();
+            $('#otherField').removeAttr('required');
+            $('#otherField').removeAttr('data-error');
+        }
+    });
+    $("#seeAnotherField").trigger("change");
 
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Add</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--------------------------------------------------------------Control MODAL-------------------------------------------------------------->
-<div class="modal fade" id="congtrolModal" tabindex="-1" role="dialog" aria-labelledby="congtrolModal"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="congtrolModal">Add Control</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <p>
-                        <label>Pet Id:</label> <br>
-                        <select id="case" class="form-control" required>
-                            <option selected value=""> Choose </option>
-                            <option value="lost">1</option>
-                            <option value="died">2</option>
-                            <option value="lost">3</option>
-                            <option value="died">4</option>
-                            <option value="lost">5</option>
-                            <option value="died">6</option>
-                        </select>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Description:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                    </p>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Add</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--------------------------------------------------------------Vaccination MODAL-------------------------------------------------------------->
-<div class="modal fade" id="sterilizationModal" tabindex="-1" role="dialog" aria-labelledby="sterilizationModal"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="sterilizationModal">Add Sterilization</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <p>
-                        <label>Pet Id:</label> <br>
-                        <select id="case" class="form-control" required>
-                            <option selected value=""> Choose </option>
-                            <option value="lost">1</option>
-                            <option value="died">2</option>
-                            <option value="lost">3</option>
-                            <option value="died">4</option>
-                            <option value="lost">5</option>
-                            <option value="died">6</option>
-                        </select>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Description:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                    </p>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Add</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--------------------------------------------------------------Vaccination MODAL-------------------------------------------------------------->
-<div class="modal fade" id="sterilizationModal" tabindex="-1" role="dialog" aria-labelledby="sterilizationModal"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="sterilizationModal">Add Sterilization</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <p>
-                        <label>Pet Id:</label> <br>
-                        <select id="case" class="form-control" required>
-                            <option selected value=""> Choose </option>
-                            <option value="lost">1</option>
-                            <option value="died">2</option>
-                            <option value="lost">3</option>
-                            <option value="died">4</option>
-                            <option value="lost">5</option>
-                            <option value="died">6</option>
-                        </select>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Description:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                    </p>
-
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Add</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
-            </div>
-        </div>
-    </div>
-</div>
+</script>
 
 </html>
