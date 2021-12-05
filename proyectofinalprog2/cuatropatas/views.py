@@ -7,7 +7,7 @@ from django.views.generic import ListView, UpdateView
 from datetime import date
 from django.urls import reverse_lazy
 
-from cuatropatas.forms import RegisterOwner, RegisterUserO, RegisterVet, RegisterUserV, login, RegisterPet, addVisit
+from cuatropatas.forms import RegisterOwner, RegisterUserO, RegisterVet, RegisterUserV, login, RegisterPet, addVisit,addPetCaseForm
 from cuatropatas.models import Vet, Owner, Pet, Userapp, PetCase, Visit
 
 # Create your views here.
@@ -70,10 +70,29 @@ def newVeterinary (request):
         form_vet = RegisterVet()
     return render (request, "newVeterinary.html", {'form_user': form_user,'form_vet':form_vet })
 
-def newPet (request):
+def addPetCase(request):
+    if request.method == "POST":
+        form = addPetCaseForm(request.POST)
+        if form.is_valid():
+            created_at = date.today()
+            petid= form.cleaned_data['pets']
+            description= form.cleaned_data['description']
+            type= form.cleaned_data['type']
+            pet = Pet.objects.get(id=petid)
+            new_case = PetCase(created_at=created_at, type=type, description=description, pet=pet)
+            new_case.save()
+            return redirect('owner')
+    else:
+        form= addPetCaseForm()
+    return render (request, "addPetCase.html", {'form':form})
+
+@login_required
+def owner (request):
     user = request.user
     owner = Owner.objects.get(userapp_id = user.id)
     pet = owner.pet_set.all()
+    visit = Visit.objects.all()
+    petcase = PetCase.objects.all()
     if request.method == 'POST':
         form = RegisterPet(request.POST, request.FILES)
         print("*********************************")
@@ -99,7 +118,7 @@ def newPet (request):
             return render (request, "Owner.html", {'form': form, 'pets':pet })
     else:
         form = RegisterPet()
-    return render (request, "Owner.html", {'form': form, 'pets':pet })
+    return render (request, "Owner.html", {'form': form, 'pets':pet,'visits':visit,'petcases':petcase })
 
 @login_required
 def vet (request):
@@ -132,14 +151,13 @@ def logoutview (request):
     return redirect ('index')
 
 
-def owner_list(request):
+def official(request):
     owner = Owner.objects.all()
     pet = Pet.objects.all()
     petcase = PetCase.objects.all()
     visit = Visit.objects.all()
     contexto = {'owners':owner, 'pets':pet, 'petcases':petcase, 'visits': visit}
     return render(request, 'Official.html', contexto)
-
 
 def editOwner (request):
     return render(request, 'editOwner.html')

@@ -7,9 +7,6 @@ from django.db import models
 class Userapp(AbstractUser):
     role = models.CharField (max_length=15)
 
-    def __str__(self):
-        return self.username
-
 class Official(models.Model):
     userapp = models.OneToOneField(Userapp, null=True, blank= True, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)

@@ -106,16 +106,18 @@
                 <td>{{pet.dangerous}}</td>
                 <td>{{pet.sterilized}}</td>
                 <td><button type="button" class="button" data-toggle="modal"
-                        data-target="#galleryModal">Gallery</button></td>
-                <td><button type="button" class="button" data-toggle="modal" data-target="#vetVisitModal">See</button>
+                        data-target="#galleryModal{{pet.id}}">Gallery</button></td>
+                <td><button type="button" class="button" data-toggle="modal" data-target="#vetVisitModal{{pet.id}}">See</button>
                 </td>
-                <td><button type="button" class="button" data-toggle="modal" data-target="#caseModal">Add/See</button>
+                <td><button type="button" class="button" data-toggle="modal" data-target="#caseModal{{pet.id}}">See</button>
                 </td>
             </tr>
             {% endfor %}
             {% endif %}
         </tbody>
-        <td><button type="button" class="button" data-toggle="modal" data-target="#addPetModal ">Add new Pet</button>
+        <td><button type="button" class="button" data-toggle="modal" data-target="#addPetModal">Add new Pet</button>
+        </td>
+        <td><button type="button" class="button" onclick=" location.href='../addPetCase/'">Add new Pet Case</button>
         </td>
 </table>
 
@@ -183,59 +185,10 @@
     </div>
 </div>
 
-<!---------------------------------------------------------------Edit User MODAL---------------------------------------------------------------->
-<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editUserModal">Edit user</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>
-                    <label>Neighborhood:</label> <br>
-                    <select id="neighborhood" class="form-control" required>
-                        <option selected value=""> Elige una opción </option>
-                        <option value="Antonio Nariño">Antonio Nariño</option>
-                        <option value="Barrios Unidos">Barrios Unidos</option>
-                        <option value="Bosa">Bosa</option>
-                        <option value="Chapinero">Chapinero</option>
-                        <option value="Ciudad Bolívar">Ciudad Bolívar</option>
-                        <option value="Engativá">Engativá</option>
-                        <option value="Fontibón">Fontibón</option>
-                        <option value="Kennedy">Kennedy</option>
-                        <option value="La Candelaria">La Candelaria</option>
-                        <option value="Los Mártires">Los Mártires</option>
-                        <option value="Puente Aranda">Puente Aranda</option>
-                        <option value="Rafael Uribe Uribe">Rafael Uribe Uribe</option>
-                        <option value="San Cristóbal">San Cristóbal</option>
-                        <option value="Santa Fe">Santa Fe</option>
-                        <option value="Suba">Suba</option>
-                        <option value="Sumapaz">Sumapaz</option>
-                        <option value="Teusaquillo">Teusaquillo</option>
-                        <option value="Tunjuelito">Tunjuelito</option>
-                        <option value="Usaquén">Usaquén</option>
-                        <option value="Usme">Usme</option>
-                    </select>
-                </p>
-                <p>
-                    <label>Address:</label> <br>
-                    <input id="address" class="form-control" type="text">
-                </p>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+{% if pets %}
+    {% for pet in pets %}
 <!---------------------------------------------------------------Gallery MODAL---------------------------------------------------------------->
-<div class="modal fade" id="galleryModal" tabindex="-1" role="dialog" aria-labelledby="galleryModal" aria-hidden="true">
+<div class="modal fade" id="galleryModal{{pet.id}}" tabindex="-1" role="dialog" aria-labelledby="galleryModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -258,9 +211,14 @@
         </div>
     </div>
 </div>
+    {% endfor %}
+{% endif %}
+
 
 <!--------------------------------------------------------------Vet Visit MODAL-------------------------------------------------------------->
-<div class="modal fade" id="vetVisitModal" tabindex="-1" role="dialog" aria-labelledby="vetVisitModal"
+{% if pets %}
+    {% for pet in pets %}
+<div class="modal fade" id="vetVisitModal{{pet.id}}" tabindex="-1" role="dialog" aria-labelledby="vetVisitModal"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
@@ -278,32 +236,26 @@
                         <th scope="col">Type</th>
                         <th scope="col">Description</th>
                         <th scope="col">Vet ID</th>
+                        <th scope="col">Vet Name</th>
                         <th scope="col">Pet ID</th>
                     </tr>
-                    <tr>
-                        <th>1</th>
-                        <td>2021/11/27 20:20</td>
-                        <td>Sterilization</td>
-                        <td>All wet good</td>
-                        <td>10</td>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <th>2</th>
-                        <td>2021/11/27 20:20</td>
-                        <td>Vaccination</td>
-                        <td>All wet good</td>
-                        <td>10</td>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <th>3</th>
-                        <td>2021/11/27 20:20</td>
-                        <td>Control</td>
-                        <td>All wet good</td>
-                        <td>10</td>
-                        <td>10</td>
-                    </tr>
+                    <tbody>
+                        {% if visits %}
+                            {% for visit in visits %}
+                        <tr>
+                            {% if visit.pet_id == pet.id%}
+                                <td>{{ visit.id }}</td>
+                                <td>{{ visit.created_at }}</td>
+                                <td>{{ visit.type}}</td>
+                                <td>{{ visit.description }}</td>
+                                <td>{{ visit.vet_id }}</td>
+                                <td>{{ visit.vet.name }}</td>
+                                <td>{{ visit.pet_id }}</td>
+                            {% endif %}
+                        </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
 
                 </table>
             </div>
@@ -313,13 +265,19 @@
         </div>
     </div>
 </div>
+    {% endfor %}
+{% endif %}
 
 <!--------------------------------------------------------------Case MODAL-------------------------------------------------------------->
-<div class="modal fade" id="caseModal" tabindex="-1" role="dialog" aria-labelledby="caseModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
+
+{% if pets %}
+    {% for pet in pets %}
+<div class="modal fade" id="caseModal{{pet.id}}" tabindex="-1" role="dialog" aria-labelledby="vetVisitModal"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="caseModal">Add/See Case</h5>
+                <h5 class="modal-title" id="vetVisitModal">Pet Cases</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -330,38 +288,27 @@
                         <th scope="col">Case Type</th>
                         <th scope="col">Description</th>
                     </tr>
-                    <tr>
-                        <th>Lost</th>
-                        <td>lost near the park</td>
-                    </tr>
-                    <tr>
-                        <th>Died</th>
-                        <td>My pet died :(</td>
-                    </tr>
-                </table>
-                <form >
-                    <p>
-                        <label>Case:</label> <br>
-                        <select id="case" class="form-control" required>
-                            <option selected value=""> Choose </option>
-                            <option value="lost">Lost</option>
-                            <option value="died">Died</option>
-                        </select>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Message:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
-                    </p>
+                    <tbody>
+                        {% if petcases %}
+                            {% for petcase in petcases %}
+                        <tr>
+                            {% if petcase.pet_id == pet.id%}
+                                <th>{{ petcase.type }}</th>
+                                <td>{{ petcase.description }}</td>
+                            {% endif %}
+                        </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </tbody>
 
-                </form>
+                </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Add Case</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
             </div>
         </div>
     </div>
 </div>
-
+    {% endfor %}
+{% endif %}
 </html>

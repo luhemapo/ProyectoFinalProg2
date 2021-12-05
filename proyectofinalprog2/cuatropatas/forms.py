@@ -120,6 +120,16 @@ class addVisit(forms.Form):
     TYPES= [('Choose','Choose'),('Microchip','Microchip implantation'),('Vaccination','Vaccination'),('Deworming','Deworming'),('Urgency','Urgency'),('Control','Control'),]
     type= forms.ChoiceField( choices = TYPES, widget=forms.Select(attrs= { 'default' : 1,'required' : True,'class' : 'form-select form-control','id':'seeAnotherField'}))
     
+class addPetCaseForm(forms.Form):
+    PETS = []
+    pet = None
+    for pet in Pet.objects.all():
+        PETS.append((pet.id, str(pet.id) +"-"+ pet.name))
+    pets = forms.ChoiceField(required=True, choices = PETS, widget=forms.Select(attrs={'default': 1 , 'class':'form-select form-control' }))
+    description = forms.CharField(required=True, widget=forms.Textarea({'class': 'form-control', 'rows':3}))
+    TYPES= [('Choose','Choose'),('Lost','Lost'),('Died','Died'),]
+    type= forms.ChoiceField( choices = TYPES, widget=forms.Select(attrs= { 'default' : 1,'required' : True,'class' : 'form-select form-control','id':'seeAnotherField'}))
+ 
 class editVet(forms.Form):
     BARRIOS= [('Choose','Choose'),('Antonio Nariño','Antonio Nariño'),('Barrios Unidos','Barrios Unidos'),('Bosa','Bosa'),('Chapinero','Chapinero'),('Ciudad Bolívar','Ciudad Bolívar'),
     ('Engativá','Engativá'),('Fontibón','Fontibón'),('Kennedy','Kennedy'),('La Candelaria','La Candelaria'),('Los Mártires','Los Mártires'),('Puente Aranda','Puente Aranda')
