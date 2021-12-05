@@ -3,12 +3,13 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as log
 from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView
+from django.views.generic import ListView, UpdateView
 from datetime import date
+from django.urls import reverse_lazy
 
-from cuatropatas.forms import RegisterOwner, RegisterUserO, RegisterVet, RegisterUserV, login, RegisterPet, addPetCase
-from cuatropatas.models import Vet, Owner, Pet, Userapp, PetCase
-from cuatropatas.forms import editVet
+from cuatropatas.forms import RegisterOwner, RegisterUserO, RegisterVet, RegisterUserV, login, RegisterPet, addVisit
+from cuatropatas.models import Vet, Owner, Pet, Userapp, PetCase, Visit
+
 # Create your views here.
 
 def index (request):
@@ -71,7 +72,7 @@ def newVeterinary (request):
 
 def newPet (request):
     user = request.user
-    owner = Owner.objects.get(userapp_id=user.id)
+    owner = Owner.objects.get(userapp_id = user.id)
     pet = owner.pet_set.all()
     if request.method == 'POST':
         form = RegisterPet(request.POST, request.FILES)
@@ -102,10 +103,10 @@ def newPet (request):
 
 @login_required
 def vet (request):
-    petcases = PetCase.objects.all()
+    visit = Visit.objects.all()
+    user = request.user
     if request.method == 'POST':
-        form = addPetCase(request.POST)
-        form_edit = editVet(request.POST)
+        form = addVisit(request.POST)
         print("---------------------------------")
         print(form.is_valid())
         if form.is_valid():
@@ -115,16 +116,16 @@ def vet (request):
             type= form.cleaned_data['type']
             microchip= form.cleaned_data['microchip']
             pet = Pet.objects.get(id=petid)
-            new_case = PetCase(created_at=created_at, type=type, description=description, pet=pet)
-            new_case.save()
+            vet = Vet.objects.get(id=user.vet.id)
+            new_visit = Visit(created_at=created_at, type=type, description=description,vet= vet, pet=pet)
+            new_visit.save()
             if type == 'Microchip':
                 pet.microchip = microchip
                 pet.save()
             return redirect('vet')
     else:
-        form = addPetCase()
-        form_edit = editVet()
-    return render (request, "Vet.html",{'form':form, 'petcases':petcases})
+        form = addVisit()
+    return render (request, "Vet.html",{'form':form, 'visits':visit})
 
 def logoutview (request):
     logout(request)
@@ -134,9 +135,32 @@ def logoutview (request):
 def owner_list(request):
     owner = Owner.objects.all()
     pet = Pet.objects.all()
-    contexto = {'owners':owner, 'pets':pet}
+    petcase = PetCase.objects.all()
+    visit = Visit.objects.all()
+    contexto = {'owners':owner, 'pets':pet, 'petcases':petcase, 'visits': visit}
     return render(request, 'Official.html', contexto)
 
+
+def editOwner (request):
+    return render(request, 'editOwner.html')
+
+def editVet (request):
+    user = request.user
+    if request.method == "POST":
+        form=editVet(request.POST)
+        if form.is_valid():
+            print("Es valido")
+    else:
+        contexto = {
+            'neighborhood':user.vet.neighborhood,
+            'address': user.vet.address,
+        }
+        form = editVet(initial = contexto)
+    print (user)
+    return render(request, 'editVet.html',{'form':form})
+
+    
+    
 
 
 

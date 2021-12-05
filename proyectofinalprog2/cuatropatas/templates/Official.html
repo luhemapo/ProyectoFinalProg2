@@ -133,9 +133,9 @@
                 <td>{{ pet.sex }}</td>
                 <td>{{ pet.dangerous }}</td>
                 <td>{{ pet.sterilized }}</td>
-                <td><button type="button" class="button" data-toggle="modal" data-target="#vetVisitModal">See</button>
+                <td><button type="button" class="button" data-toggle="modal" data-target="#vetVisitModal{{pet.id}}">See</button>
                 </td>
-                <td><button type="button" class="button" data-toggle="modal" data-target="#caseModal">See</button>
+                <td><button type="button" class="button" data-toggle="modal" data-target="#caseModal{{pet.id}}">See</button>
                 </td>
             </tr>
             {% endfor %}
@@ -145,96 +145,93 @@
 </table>
 
 <!--------------------------------------------------------------Vet Visit MODAL-------------------------------------------------------------->
-<div class="modal fade" id="vetVisitModal" tabindex="-1" role="dialog" aria-labelledby="vetVisitModal"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="vetVisitModal">Vet visits</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table center">
-                    <tr>
-                        <th scope="col">Visit ID</th>
-                        <th scope="col">Date created</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Description</th>
-                        <th scope="col">Vet ID</th>
-                        <th scope="col">Pet ID</th>
-                    </tr>
-                    <tr>
-                        <th>1</th>
-                        <td>2021/11/27 20:20</td>
-                        <td>Sterilization</td>
-                        <td>All wet good</td>
-                        <td>10</td>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <th>2</th>
-                        <td>2021/11/27 20:20</td>
-                        <td>Vaccination</td>
-                        <td>All wet good</td>
-                        <td>10</td>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <th>3</th>
-                        <td>2021/11/27 20:20</td>
-                        <td>Control</td>
-                        <td>All wet good</td>
-                        <td>10</td>
-                        <td>10</td>
-                    </tr>
-
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+{% if pets %}
+    {% for pet in pets %}
+        <div class="modal fade" id="vetVisitModal{{pet.id}}" tabindex="-1" role="dialog" aria-labelledby="vetVisitModal"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="vetVisitModal">Vet visits</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table center">
+                            <tr>
+                                <th scope="col">Visit ID</th>
+                                <th scope="col">Date created</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Vet ID</th>
+                                <th scope="col">Pet ID</th>
+                            </tr>
+                            {% if visits %}
+                                {% for visit in visits %}
+                                    <tr>
+                                        {% if visit.pet_id == pet.id%}
+                                            <th>{{visit.id}}</th>
+                                            <td>{{visit.created_at}}</td>
+                                            <td>{{visit.type}}</td>
+                                            <td>{{visit.description}}</td>
+                                            <td>{{visit.vet_id}}</td>
+                                            <td>{{visit.pet_id}}</td>
+                                        {% endif %}
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
+    {% endfor %}
+{% endif %}
 <!--------------------------------------------------------------Case MODAL-------------------------------------------------------------->
-<div class="modal fade" id="caseModal" tabindex="-1" role="dialog" aria-labelledby="caseModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="caseModal">Add/See Case</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table center">
-                    <tr>
-                        <th scope="col">Case Type</th>
-                        <th scope="col">Description</th>
-                    </tr>
-                    <tr>
-                        <th>Lost</th>
-                        <td>lost near the park</td>
-                    </tr>
-                    <tr>
-                        <th>Died</th>
-                        <td>My pet died :(</td>
-                    </tr>
-                </table>
-                
-            </div>
-            <div class="modal-footer">
-                
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+{% if pets %}
+    {% for pet in pets %}
+        <div class="modal fade" id="caseModal{{pet.id}}" tabindex="-1" role="dialog" aria-labelledby="caseModal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="caseModal">See Cases</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table center">
+                            <tr>
+                                <th scope="col">Case Type</th>
+                                <th scope="col">Description</th>
+                            </tr>
+                            {% if petcases %}
+                                {% for petcase in petcases %}
+                            <tr>
+                                {% if petcase.pet_id == pet.id%}
+                                    <th>{{petcase.type}}</th>
+                                    <td>{{petcase.description}}</td>
+                                {% endif %}
+                            </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </table>
+                        
+                    </div>
+                    <div class="modal-footer">
+                        
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-
+    {% endfor %}
+{% endif %}
 <!---------------------------------------------------------------Search Functions-------------------------------------------------------------->
 <script>
     function searchOwnerTable() {

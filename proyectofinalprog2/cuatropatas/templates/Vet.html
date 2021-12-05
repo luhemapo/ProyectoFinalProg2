@@ -60,7 +60,7 @@
                 <td>{{user.vet.name}}</td>
                 <td>{{user.vet.address}}</td>
                 <td>{{user.vet.neighborhood}}</td>
-                <td><button type="button" class="button" data-toggle="modal" data-target="#editVetModal">Edit</button>
+                <td><a type="button" class="button" href="{% url 'editVet'%}">Edit</a>
                 </td>
             </tr>
         </tbody>
@@ -97,16 +97,16 @@
             </tr>
         </thead>
         <tbody>
-            {% if petcases %}
-            {% for pet in petcases %}
+            {% if visits %}
+            {% for visit in visits %}
             <tr>
-                <td>{{ pet.id }}</td>
-                <td>{{ pet.created_at }}</td>
-                <td>{{ pet.type}}</td>
-                <td>{{ pet.description }}</td>
+                <td>{{ visit.id }}</td>
+                <td>{{ visit.created_at }}</td>
+                <td>{{ visit.type}}</td>
+                <td>{{ visit.description }}</td>
                 <td>{{ user.id }}</td>
-                <td>{{ pet.pet_id }}</td>
-                <td>{{ pet.pet.name }}</td>
+                <td>{{ visit.pet_id }}</td>
+                <td>{{ visit.pet.name }}</td>
             </tr>
             {% endfor %}
             {% endif %}
@@ -140,58 +140,6 @@
     }
 </script>
 
-<!---------------------------------------------------------------Edit Vet MODAL---------------------------------------------------------------->
-<div class="modal fade" id="editVetModal" tabindex="-1" role="dialog" aria-labelledby="editVetModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editVetModal">Edit Veterinary</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="POST" action="{% url 'vet' %}">
-            <div class="modal-body">
-                <p>
-                    <label>Neighborhood:</label> <br>
-                    <select id="neighborhood" class="form-control" required>
-                        <option selected value=""> Elige una opción </option>
-                        <option value="Antonio Nariño">Antonio Nariño</option>
-                        <option value="Barrios Unidos">Barrios Unidos</option>
-                        <option value="Bosa">Bosa</option>
-                        <option value="Chapinero">Chapinero</option>
-                        <option value="Ciudad Bolívar">Ciudad Bolívar</option>
-                        <option value="Engativá">Engativá</option>
-                        <option value="Fontibón">Fontibón</option>
-                        <option value="Kennedy">Kennedy</option>
-                        <option value="La Candelaria">La Candelaria</option>
-                        <option value="Los Mártires">Los Mártires</option>
-                        <option value="Puente Aranda">Puente Aranda</option>
-                        <option value="Rafael Uribe Uribe">Rafael Uribe Uribe</option>
-                        <option value="San Cristóbal">San Cristóbal</option>
-                        <option value="Santa Fe">Santa Fe</option>
-                        <option value="Suba">Suba</option>
-                        <option value="Sumapaz">Sumapaz</option>
-                        <option value="Teusaquillo">Teusaquillo</option>
-                        <option value="Tunjuelito">Tunjuelito</option>
-                        <option value="Usaquén">Usaquén</option>
-                        <option value="Usme">Usme</option>
-                    </select>
-                </p>
-                <p>
-                    <label>Address:</label> <br>
-                    {{form_edit.address}}
-                </p>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </form>
-        </div>
-    </div>
-</div>
 <!--------------------------------------------------------------Add Visit MODAL-------------------------------------------------------------->
 <div class="modal fade" id="dewormingModal" tabindex="-1" role="dialog" aria-labelledby="dewormingModal"
     aria-hidden="true">
