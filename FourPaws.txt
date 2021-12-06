@@ -1,0 +1,169 @@
+create table cuatropatas_userapp
+(
+    id           bigserial
+        constraint cuatropatas_userapp_pkey
+            primary key,
+    password     varchar(128)             not null,
+    last_login   timestamp with time zone,
+    is_superuser boolean                  not null,
+    username     varchar(150)             not null
+        constraint cuatropatas_userapp_username_key
+            unique,
+    first_name   varchar(150)             not null,
+    last_name    varchar(150)             not null,
+    email        varchar(254)             not null,
+    is_staff     boolean                  not null,
+    is_active    boolean                  not null,
+    date_joined  timestamp with time zone not null,
+    role         varchar(15)              not null
+);
+
+alter table cuatropatas_userapp
+    owner to postgres;
+
+create index cuatropatas_userapp_username_fec88512_like
+    on cuatropatas_userapp (username varchar_pattern_ops);
+
+INSERT INTO public.cuatropatas_userapp (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, role) VALUES (3, 'pbkdf2_sha256$260000$CnjwFvcXUjfg9YiMnkSYoR$E1XXFqh4PIXPiJEDiGal1W24LNKTICUzrFISFEgZPPQ=', '2021-12-06 01:00:35.695946 +00:00', false, 'official', '', '', 'official@gmail.com', false, true, '2021-12-04 02:18:34.107626 +00:00', 'official');
+INSERT INTO public.cuatropatas_userapp (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, role) VALUES (2, 'pbkdf2_sha256$260000$AasGrpysR7iJvrRUC3BR0D$+9xC2R7NCB4ZBqbHRKHx+KgJKtON2UIQlU4BdJl8pCc=', '2021-12-06 01:02:19.598904 +00:00', false, 'dvictoria', '', '', 'dvictoria@gmail.com', false, true, '2021-12-04 02:18:08.609098 +00:00', 'vet');
+INSERT INTO public.cuatropatas_userapp (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, role) VALUES (1, 'pbkdf2_sha256$260000$tSkIlqkiBYKvjfH13Os5c8$WVRfnL+IvJWjJuRPVDruSjBAC6TaYycRnAKDijWFqxc=', '2021-12-06 01:03:09.710683 +00:00', false, 'vmendoza', '', '', 'vmendoza@gmail.com', false, true, '2021-12-04 02:17:32.987339 +00:00', 'owner');
+
+create table cuatropatas_official
+(
+    id         bigserial
+        constraint cuatropatas_official_pkey
+            primary key,
+    name       varchar(30) not null,
+    userapp_id bigint
+        constraint cuatropatas_official_userapp_id_key
+            unique
+        constraint cuatropatas_official_userapp_id_7b6bb43d_fk_cuatropat
+            references cuatropatas_userapp
+            deferrable initially deferred
+);
+
+alter table cuatropatas_official
+    owner to postgres;
+
+INSERT INTO public.cuatropatas_official (id, name, userapp_id) VALUES (1, 'Luis Martinez', 3);
+
+create table cuatropatas_owner
+(
+    id           bigserial
+        constraint cuatropatas_owner_pkey
+            primary key,
+    name         varchar(30) not null,
+    address      varchar(60) not null,
+    neighborhood varchar(30) not null,
+    userapp_id   bigint
+        constraint cuatropatas_owner_userapp_id_key
+            unique
+        constraint cuatropatas_owner_userapp_id_892e0f87_fk_cuatropatas_userapp_id
+            references cuatropatas_userapp
+            deferrable initially deferred
+);
+
+alter table cuatropatas_owner
+    owner to postgres;
+
+INSERT INTO public.cuatropatas_owner (id, name, address, neighborhood, userapp_id) VALUES (1, 'Valentina Mendoza', 'Calle 103#68-3', 'Suba', 1);
+
+create table cuatropatas_vet
+(
+    id           bigserial
+        constraint cuatropatas_vet_pkey
+            primary key,
+    name         varchar(30) not null,
+    address      varchar(60) not null,
+    neighborhood varchar(30) not null,
+    userapp_id   bigint
+        constraint cuatropatas_vet_userapp_id_key
+            unique
+        constraint cuatropatas_vet_userapp_id_156427b5_fk_cuatropatas_userapp_id
+            references cuatropatas_userapp
+            deferrable initially deferred
+);
+
+alter table cuatropatas_vet
+    owner to postgres;
+
+INSERT INTO public.cuatropatas_vet (id, name, address, neighborhood, userapp_id) VALUES (1, 'Daniela Victoria', 'Calle 106#67-56', 'Suba', 2);
+
+create table cuatropatas_pet
+(
+    id         bigserial
+        constraint cuatropatas_pet_pkey
+            primary key,
+    microchip  bigint
+        constraint cuatropatas_pet_microchip_key
+            unique,
+    name       varchar(30)  not null,
+    species    varchar(30)  not null,
+    race       varchar(30)  not null,
+    size       varchar(30)  not null,
+    sex        varchar(15)  not null,
+    picture    varchar(120) not null,
+    birth      date         not null,
+    dangerous  varchar(5)   not null,
+    sterilized varchar(5)   not null,
+    owner_id   bigint       not null
+        constraint cuatropatas_pet_owner_id_7aaa2210_fk_cuatropatas_owner_id
+            references cuatropatas_owner
+            deferrable initially deferred
+);
+
+alter table cuatropatas_pet
+    owner to postgres;
+
+create index cuatropatas_pet_owner_id_7aaa2210
+    on cuatropatas_pet (owner_id);
+
+INSERT INTO public.cuatropatas_pet (id, microchip, name, species, race, size, sex, picture, birth, dangerous, sterilized, owner_id) VALUES (21, 1235, 'Pepe', 'Cat', 'Angora', 'Small', 'Male', '', '2021-02-25', 'No', 'Yes', 1);
+INSERT INTO public.cuatropatas_pet (id, microchip, name, species, race, size, sex, picture, birth, dangerous, sterilized, owner_id) VALUES (22, 1256, 'Lola', 'Cat', 'Angora', 'Small', 'Female', '', '2010-02-21', 'No', 'Yes', 1);
+INSERT INTO public.cuatropatas_pet (id, microchip, name, species, race, size, sex, picture, birth, dangerous, sterilized, owner_id) VALUES (20, 1234, 'Gucci', 'Dog', 'Husky', 'Medium', 'Female', '', '2020-12-25', 'No', 'No', 1);
+INSERT INTO public.cuatropatas_pet (id, microchip, name, species, race, size, sex, picture, birth, dangerous, sterilized, owner_id) VALUES (23, 1348, 'Paco', 'Dog', 'Alaska', 'Big', 'Male', 'img/gucci.png', '2021-01-25', 'No', 'No', 1);
+
+create table cuatropatas_petcase
+(
+    id          bigserial
+        constraint cuatropatas_petcase_pkey
+            primary key,
+    created_at  timestamp with time zone not null,
+    type        varchar(15)              not null,
+    description varchar(240)             not null,
+    pet_id      bigint                   not null
+        constraint cuatropatas_petcase_pet_id_b6b2c52b_fk_cuatropatas_pet_id
+            references cuatropatas_pet
+            deferrable initially deferred
+);
+
+alter table cuatropatas_petcase
+    owner to postgres;
+
+create index cuatropatas_petcase_pet_id_b6b2c52b
+    on cuatropatas_petcase (pet_id);
+
+INSERT INTO public.cuatropatas_petcase (id, created_at, type, description, pet_id) VALUES (15, '2021-12-05 20:44:17.153073 +00:00', 'Died', 'Im so sad :(', 22);
+INSERT INTO public.cuatropatas_petcase (id, created_at, type, description, pet_id) VALUES (13, '2021-12-05 20:25:51.300654 +00:00', 'Lost', 'Gucci got lost near the park.', 20);
+
+create table cuatropatas_vet
+(
+    id           bigserial
+        constraint cuatropatas_vet_pkey
+            primary key,
+    name         varchar(30) not null,
+    address      varchar(60) not null,
+    neighborhood varchar(30) not null,
+    userapp_id   bigint
+        constraint cuatropatas_vet_userapp_id_key
+            unique
+        constraint cuatropatas_vet_userapp_id_156427b5_fk_cuatropatas_userapp_id
+            references cuatropatas_userapp
+            deferrable initially deferred
+);
+
+alter table cuatropatas_vet
+    owner to postgres;
+
+INSERT INTO public.cuatropatas_vet (id, name, address, neighborhood, userapp_id) VALUES (1, 'Daniela Victoria', 'Calle 106#67-56', 'Suba', 2);
+
