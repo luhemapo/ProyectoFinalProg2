@@ -12,7 +12,7 @@ Github: https://github.com/luhemapo/ProyectoFinalProg2.git
 
 Base de datos: FourPaws.txt (Archivo adjunto al proyecto)
 
-URL del video: 
+URL del video: https://youtu.be/5T14VMFFViA
 
 # Funcionalidad a alto nivel: 
 
