@@ -45,37 +45,15 @@
     <div class="modal-body table center" style="max-width: 25%">
         <p>
             <label>Neighborhood:</label> <br>
-            <select id="neighborhood" class="form-control" required>
-                <option selected value=""> Elige una opción </option>
-                <option value="Antonio Nariño">Antonio Nariño</option>
-                <option value="Barrios Unidos">Barrios Unidos</option>
-                <option value="Bosa">Bosa</option>
-                <option value="Chapinero">Chapinero</option>
-                <option value="Ciudad Bolívar">Ciudad Bolívar</option>
-                <option value="Engativá">Engativá</option>
-                <option value="Fontibón">Fontibón</option>
-                <option value="Kennedy">Kennedy</option>
-                <option value="La Candelaria">La Candelaria</option>
-                <option value="Los Mártires">Los Mártires</option>
-                <option value="Puente Aranda">Puente Aranda</option>
-                <option value="Rafael Uribe Uribe">Rafael Uribe Uribe</option>
-                <option value="San Cristóbal">San Cristóbal</option>
-                <option value="Santa Fe">Santa Fe</option>
-                <option value="Suba">Suba</option>
-                <option value="Sumapaz">Sumapaz</option>
-                <option value="Teusaquillo">Teusaquillo</option>
-                <option value="Tunjuelito">Tunjuelito</option>
-                <option value="Usaquén">Usaquén</option>
-                <option value="Usme">Usme</option>
-            </select>
+                {{form.neighborhood}}
         </p>
         <div>
             <label>Address:</label> <br>
-            {{form_edit.address}}
+            {{form.address}}
         </div>
         <div class="modal-footer" style="justify-content: center;">
             <button type="button" class="btn btn-primary">Save</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick=" location.href='../Owner/'">Close</button>
         </div>
     </div>
     

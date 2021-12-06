@@ -7,7 +7,7 @@ from django.views.generic import ListView, UpdateView
 from datetime import date
 from django.urls import reverse_lazy
 
-from cuatropatas.forms import RegisterOwner, RegisterUserO, RegisterVet, RegisterUserV, login, RegisterPet, addVisit,addPetCaseForm
+from cuatropatas.forms import RegisterOwner, RegisterUserO, RegisterVet, RegisterUserV, login, RegisterPet, addVisit,addPetCaseForm, editVetForm, editOwnerForm
 from cuatropatas.models import Vet, Owner, Pet, Userapp, PetCase, Visit
 
 # Create your views here.
@@ -108,10 +108,11 @@ def owner (request):
             sex = form.cleaned_data['sex']
             dangerous = form.cleaned_data['dangerous']
             sterilized = form.cleaned_data['sterilized']
+            picture = request.FILES['picture']
             myowner = owner
-            print(birth, microchip, name, species, race, size, sex, dangerous, sterilized, myowner)
+            print(birth, microchip, name, species, race, size, sex, dangerous, sterilized, myowner, picture)
 
-            new_pet = Pet (microchip=microchip, name=name, species=species, race=race, size=size, sex=sex, birth=birth, dangerous=dangerous, sterilized=sterilized, owner=myowner)
+            new_pet = Pet (microchip=microchip, name=name, species=species, race=race, size=size, sex=sex, birth=birth, dangerous=dangerous, picture=picture,sterilized=sterilized, owner=myowner)
             print("++++++++++++++++++++++++++++++++")
             print(new_pet)
             new_pet.save()
@@ -149,8 +150,7 @@ def vet (request):
 def logoutview (request):
     logout(request)
     return redirect ('index')
-
-
+@login_required
 def official(request):
     owner = Owner.objects.all()
     pet = Pet.objects.all()
@@ -159,21 +159,47 @@ def official(request):
     contexto = {'owners':owner, 'pets':pet, 'petcases':petcase, 'visits': visit}
     return render(request, 'Official.html', contexto)
 
+@login_required
 def editOwner (request):
-    return render(request, 'editOwner.html')
+    user = request.user
+    if request.method == "POST":
+        form=editOwnerForm(request.POST)
+        if form.is_valid():
+            neighborhood = form.cleaned_data['neighborhood']
+            address = form.cleaned_data['address']
+            owner = Owner.objects.get(id=user.vet.id)
+            owner.neighborhood = neighborhood
+            owner.address = address
+            owner.save()
+            return redirect('owner')
+    else:
+        contexto = {
+            'neighborhood':user.owner.neighborhood,
+            'address': user.owner.address,
+        }
+        form = editVetForm(initial = contexto)
+    print (user)
+    return render(request, 'editOwner.html',{'form':form})
 
+@login_required
 def editVet (request):
     user = request.user
     if request.method == "POST":
-        form=editVet(request.POST)
+        form=editVetForm(request.POST)
         if form.is_valid():
-            print("Es valido")
+            neighborhood = form.cleaned_data['neighborhood']
+            address = form.cleaned_data['address']
+            vet = Vet.objects.get(id=user.vet.id)
+            vet.neighborhood = neighborhood
+            vet.address = address
+            vet.save()
+            return redirect('vet')
     else:
         contexto = {
             'neighborhood':user.vet.neighborhood,
             'address': user.vet.address,
         }
-        form = editVet(initial = contexto)
+        form = editVetForm(initial = contexto)
     print (user)
     return render(request, 'editVet.html',{'form':form})
 

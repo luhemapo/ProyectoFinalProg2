@@ -104,10 +104,16 @@ class RegisterPet(forms.Form):
     name = forms.CharField(required=True, widget=forms.TextInput(attrs={'required':True ,'class':'form-control'}))
 
     race = forms.CharField(required=True, widget=forms.TextInput(attrs={ 'required':True ,'class':'form-control'}))
+
+    picture = forms.ImageField(required=False)
         
-class editOwner(forms.Form):
-    address = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Your address *', 'required':True ,'class':'form-control'}))
-    neighborhood = forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Neighborhood *', 'required':True ,'class':'form-control'})) 
+class editOwnerForm(forms.Form):
+    BARRIOS= [('Choose','Choose'),('Antonio Nariño','Antonio Nariño'),('Barrios Unidos','Barrios Unidos'),('Bosa','Bosa'),('Chapinero','Chapinero'),('Ciudad Bolívar','Ciudad Bolívar'),
+    ('Engativá','Engativá'),('Fontibón','Fontibón'),('Kennedy','Kennedy'),('La Candelaria','La Candelaria'),('Los Mártires','Los Mártires'),('Puente Aranda','Puente Aranda')
+    ,('Rafael Uribe Uribe','Rafael Uribe Uribe'),('San Cristóbal','San Cristóbal'),('Santa Fe','Santa Fe'),('Suba','Suba'),('Sumapaz','Sumapaz')
+    ,('Teusaquillo','Teusaquillo'),('Tunjuelito','Tunjuelito'),('Usaquén','Usaquén'),('Usme','Usme')]
+    neighborhood= forms.ChoiceField( choices = BARRIOS, widget=forms.Select(attrs= { 'default' : 1,'required' : True,'class' : 'form-select form-control'}))
+    address = forms.CharField(required=True, widget=forms.TextInput(attrs={'class':'form-control'})) 
 
 class addVisit(forms.Form):
     PETS = []
@@ -130,7 +136,7 @@ class addPetCaseForm(forms.Form):
     TYPES= [('Choose','Choose'),('Lost','Lost'),('Died','Died'),]
     type= forms.ChoiceField( choices = TYPES, widget=forms.Select(attrs= { 'default' : 1,'required' : True,'class' : 'form-select form-control','id':'seeAnotherField'}))
  
-class editVet(forms.Form):
+class editVetForm(forms.Form):
     BARRIOS= [('Choose','Choose'),('Antonio Nariño','Antonio Nariño'),('Barrios Unidos','Barrios Unidos'),('Bosa','Bosa'),('Chapinero','Chapinero'),('Ciudad Bolívar','Ciudad Bolívar'),
     ('Engativá','Engativá'),('Fontibón','Fontibón'),('Kennedy','Kennedy'),('La Candelaria','La Candelaria'),('Los Mártires','Los Mártires'),('Puente Aranda','Puente Aranda')
     ,('Rafael Uribe Uribe','Rafael Uribe Uribe'),('San Cristóbal','San Cristóbal'),('Santa Fe','Santa Fe'),('Suba','Suba'),('Sumapaz','Sumapaz')

@@ -6,6 +6,7 @@ from django.db import models
 
 class Userapp(AbstractUser):
     role = models.CharField (max_length=15)
+    
 
 class Official(models.Model):
     userapp = models.OneToOneField(Userapp, null=True, blank= True, on_delete=models.CASCADE)
@@ -31,7 +32,7 @@ class Pet(models.Model):
     race = models.CharField (max_length=30)
     size = models.CharField (max_length=30)
     sex = models.CharField (max_length=15)
-    picture = models.CharField (max_length=120)
+    picture = models.ImageField (upload_to="img", null=True)
     birth = models.DateField()
     dangerous= models.CharField(max_length=5)
     sterilized= models.CharField(max_length=5)

@@ -63,7 +63,7 @@
                 <td>{{user.owner.address}}</td>
                 <td>{{user.owner.neighborhood}}</td>
                 <td><button type="button" class="button" data-toggle="modal" 
-                    data-target="#editUserModal" href="{% url 'editOwner'%}">Edit</button>
+                    data-target="#editUserModal" onclick=" location.href='../editOwner/'"  >Edit</button>
                 </td>
             </tr>
         </tbody>
@@ -132,7 +132,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="POST">
+                <form method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="form-group">
                         <p>
@@ -171,6 +171,10 @@
                             <label>Is it sterilized?:</label> <br>
                             {{ form.sterilized }}
                         </p>
+                        <p>
+                            <label>Picture:</label> <br>
+                            {{ form.picture }}
+                        </p>
                     </div>
                     
             </div>
@@ -198,7 +202,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                Add content here
+                {% if pet.picture  %}
+                    <img src="{{ pet.picture.url }} " width="100px" height="100px">
+                {% endif %}
             </div>
             <div class="modal-footer">
                     <form class="button" action="/action_page.php">
