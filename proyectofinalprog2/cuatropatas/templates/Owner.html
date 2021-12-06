@@ -106,7 +106,7 @@
                 <td>{{pet.dangerous}}</td>
                 <td>{{pet.sterilized}}</td>
                 <td><button type="button" class="button" data-toggle="modal"
-                        data-target="#galleryModal{{pet.id}}">Gallery</button></td>
+                        data-target="#galleryModal{{pet.id}}">See</button></td>
                 <td><button type="button" class="button" data-toggle="modal" data-target="#vetVisitModal{{pet.id}}">See</button>
                 </td>
                 <td><button type="button" class="button" data-toggle="modal" data-target="#caseModal{{pet.id}}">See</button>
@@ -203,15 +203,11 @@
             </div>
             <div class="modal-body">
                 {% if pet.picture  %}
-                    <img src="{{ pet.picture.url }} " width="100px" height="100px">
+                    <img src="{{ pet.picture.url }} " width="100%" height="100%">
                 {% endif %}
             </div>
             <div class="modal-footer">
-                    <form class="button" action="/action_page.php">
-                        <label for="img">Upload image:</label>
-                        <input type="file" id="img" name="img" accept="image/*">
-                        <input type="submit">
-                      </form>
+                    
                 <button type="button" class="button " style="max-width: 15%;"  data-dismiss="modal">Close</button>
             </div>
         </div>
